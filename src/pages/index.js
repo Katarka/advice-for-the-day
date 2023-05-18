@@ -3,40 +3,44 @@ import { dayli } from "../data/daylinews"
 import { useState } from "react"
 import { useEffect } from "react"
 
-const getRandomObj = (obj) => {
-  let keys = Object.keys(obj)
-  return obj[keys[keys.length * Math.random() << 0]]
-}
-
-let randomValue = getRandomObj(dayli)
-
-const startDailyNews = (time) => {
-  let now = new Date()
-
-  let timeDiff = time.getTime() - now.getTime()
-  if(timeDiff < 0) {
-    timeDiff += 24 * 60 * 60 * 1000
-  }
-
-  setInterval(randomValue, timeDiff)
-}
-
-let time = new Date()
-time.setHours(12, 0, 0, 0)
-
 const IndexPage = () => {
 
-  const [currentState, setCurrentState] = useState('')
+  const [state, setState] = useState('')
+
+  const getRandomObj = (obj) => {
+    let keys = Object.keys(obj)
+    return obj[keys[keys.length * Math.random() << 0]]
+  }
+
+  let randomValue = getRandomObj(dayli)
+
+  const startDailyNews = (time) => {
+    let now = new Date()
+
+    let timeDiff = time.getTime() - now.getTime()
+    if (timeDiff < 0) {
+      timeDiff += 24 * 60 * 60 * 1000
+    }
+
+    setInterval(getRandomObj(dayli), timeDiff)
+  }
+
+  let time = new Date()
+  time.setHours(15, 39, 36, 0)
+
 
   useEffect(() => {
-    return setCurrentState(startDailyNews(time))
-  }, [])
+    setState(startDailyNews(time))
+  })
+
+  console.log(state)
 
   return (
     <main className="bg-black h-screen">
       <div className="container mx-auto flex flex-col justify-center h-screen">
         <div className="flex flex-row justify-center items-center">
-            <p className="text-white">{currentState}</p>
+          <p className="text-white">{state}</p>
+          <p className="text-white text-center">Дорогие читатели! Наступила новая неделя, и пред нами открываются новые возможности и вызовы. Но не волнуйтесь, вам всё под силу! Сегодняшний совет - не забывайте о своих целях и мечтах. Независимо от того, какие задачи вы ставите перед собой, помните, что каждый шаг в направлении своих целей - это успех. Не бойтесь трудностей и не сдавайтесь на полпути - вы сможете преодолеть любые препятствия и достичь своих целей, если будете настойчивы и верите в себя. Помните, что только вы можете решить, как будет выглядеть ваша жизнь, и только вы можете сделать её яркой и насыщенной. Вперёд, к вершинам!</p>
         </div>
         <div className="absolute bottom-0 left-0 right-0 text-center mb-10">
           <p className="text-white">Можем, умеем, практикуем</p>
@@ -44,8 +48,11 @@ const IndexPage = () => {
       </div>
     </main>
   )
+
 }
 
 export default IndexPage
 
 export const Head = () => <title>Home Page</title>
+
+
